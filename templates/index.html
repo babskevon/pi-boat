@@ -1,9 +1,143 @@
 <html>
   <head>
-    <title>Video Streaming Demonstration</title>
+    <title>Kevo's</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
   </head>
   <body>
-    <h1>Video Streaming Demonstration</h1>
-    <img src="{{ url_for('video_feed') }}">
+	  <!--
+	  <div class="myvideo">
+		  <img src="image.jpg" alt="kevin">
+		  <!--<img src="{{ url_for('video_feed') }}" >
+	  </div>-->
+	  	  <div class="status">
+	  	<div class="speed" style="display:none;">
+	  		<label>Speed: <span class="speeds">10</span></label>
+	  		<input type="range" min="0" max="100" value="100" class="slider" id="myRange">
+	  	</div>
+	  	<div class="controls">
+	  		<button class="right">Right</button>
+	  		<button class="forward">Forward</button>
+	  		<button class="left">Left</button>
+	  	</div>
+	  	<div class="controls">
+	  		<button class="cutter">Break</button>
+	  	</div>
+	  	<div class="controls">
+	  		<button class="stop">Stop</button>
+	  		<button class="reverse">Reverse</button>
+	  		<button class="weeder">Weeder</button>
+	  	</div>
+	  </div>
+    <script src="/static/jquery.min.js" type="text/javascript"></script>
+    <script>
+		$(document).ready(function(){
+			localStorage.setItem("cmd", "W");
+			localStorage.setItem("cmd1", "C");
+			//move forward
+			$(".forward").click(function(){
+				$(".forward").addClass('weeds');
+				$(".reverse").removeClass('weeds');
+				$(".left").removeClass('weeds');
+				$(".right").removeClass('weeds');
+				$(".stop").removeClass('weeds');
+				var speed = $("#myRange").val();
+				$.post("/move",{cmd:"F",speed:speed},function(data){
+					// nothing
+					//alert(data);
+				});
+			});
+			//turn left
+			$(".left").click(function(){
+				$(".forward").removeClass('weeds');
+				$(".reverse").removeClass('weeds');
+				$(".left").addClass('weeds');
+				$(".right").removeClass('weeds');
+				$(".stop").removeClass('weeds');
+				var speed = $("#myRange").val();
+				$.post("/move",{"cmd":"L",speed:speed},function(data){
+					// nothing
+					//alert(data);
+				});
+			});		
+			// turn right
+			$(".right").click(function(){
+				$(".forward").removeClass('weeds');
+				$(".reverse").removeClass('weeds');
+				$(".left").removeClass('weeds');
+				$(".right").addClass('weeds');
+				$(".stop").removeClass('weeds');
+				var speed = $("#myRange").val();
+				$.post("/move",{"cmd":"R",speed:speed},function(data){
+					// nothing
+					//alert(data);
+				});
+			});
+			//weeder
+			$(".weeder").click(function(){
+				var cmd = localStorage.getItem('cmd');
+				if(cmd == "W"){
+					$(".weeder").addClass('weeds');
+					localStorage.setItem("cmd", "WS");
+				}else{
+					localStorage.setItem("cmd", "W");
+					$(".weeder").removeClass('weeds');
+				}
+				//alert(cmd);
+				var speed = $("#myRange").val();
+				$.post("/move",{"cmd":cmd,speed:speed},function(data){
+					// nothing
+					//alert(data);
+				});
+			});
+			//cutter
+			$(".cutter").click(function(){
+				var cmd1 = localStorage.getItem('cmd1');
+				if(cmd1 == "C"){
+					$(".cutter").addClass('weeds');
+					localStorage.setItem("cmd1", "CS");
+				}else{
+					localStorage.setItem("cmd1", "C");
+					$(".cutter").removeClass('weeds');
+				}
+				var speed = $("#myRange").val();
+				$.post("/move",{"cmd":cmd1,speed:speed},function(data){
+					// nothing
+					//alert(data);
+				});
+			});
+			//reverse
+			$(".reverse").click(function(){
+				$(".forward").removeClass('weeds');
+				$(".reverse").addClass('weeds');
+				$(".left").removeClass('weeds');
+				$(".right").removeClass('weeds');
+				$(".stop").removeClass('weeds');
+				var speed = $("#myRange").val();
+				$.post("/move",{"cmd":"RV",speed:speed},function(data){
+					// nothing
+					//alert(data);
+				});
+			});
+			//stop
+			$(".stop").click(function(){
+				$(".forward").removeClass('weeds');
+				$(".reverse").removeClass('weeds');
+				$(".left").removeClass('weeds');
+				$(".right").removeClass('weeds');
+				$(".stop").addClass('weeds');
+				var speed = $("#myRange").val();
+				$.post("/move",{"cmd":"S",speed:speed},function(data){
+					// nothing
+					//alert(data);
+				});
+			});
+			$( "#myRange" ).on( "input", function() {
+				var speed = $("#myRange").val();
+				$('.speeds').html(speed);
+				//alert("moved");
+			});
+		});
+    </script>
   </body>
 </html>
