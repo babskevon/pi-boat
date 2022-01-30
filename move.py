@@ -68,14 +68,14 @@ def reverse(speed = 100):
     #print("Moving backward")
     
 def Right():
-    GPIO.output(Backward, GPIO.HIGH)
-    GPIO.output(Backward1, GPIO.HIGH)
+    GPIO.output(Forward, GPIO.HIGH)
+    GPIO.output(Forward1, GPIO.HIGH)
     R.ChangeDutyCycle(75)
     L.ChangeDutyCycle(100)
     
 def Left():
-    GPIO.output(Backward, GPIO.HIGH)
-    GPIO.output(Backward1, GPIO.HIGH)
+    GPIO.output(Forward, GPIO.HIGH)
+    GPIO.output(Forward1, GPIO.HIGH)
     R.ChangeDutyCycle(100)
     L.ChangeDutyCycle(75)
     
@@ -83,7 +83,6 @@ def Left():
 #reverse(100)
 # Right(100):
 def Drive(cmd,speed = 100):
-    print(cmd)
     if(cmd == "CS"):
         cutOff()
     if(cmd == "C"):
@@ -102,5 +101,3 @@ def Drive(cmd,speed = 100):
         Left()
     if(cmd == 'R'):
         Right()
-        
-Drive("S",100)
