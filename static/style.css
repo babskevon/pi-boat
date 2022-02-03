@@ -17,7 +17,7 @@ img{
 	margin-left: auto;
 	margin-right: auto;
 	height:50%;
-	width:95%;
+	width:100%;
 	object-fit: fill;
 }
 .status{
@@ -28,7 +28,7 @@ img{
 	margin: auto;
 	border-radius: 5%;
 	width: 95%;
-	height: 100%;
+	height: 50%;
 }
 .controls{
 	align-content:center;
